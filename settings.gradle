@@ -2,3 +2,8 @@ rootProject.name = 'smart-rostering-backend-project'
 
 include 'identity-service'
 include 'workforce-service'
+include 'common'
+include 'jwt-library'
+include 'pay-engine'
+include 'roster-service'
+include 'api-gateway'
