@@ -1,12 +1,27 @@
 package com.smartrostering.workforce_service.entity;
 
-import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
+import com.smartrostering.workforce_service.entity.enums.EmploymentType;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "employee")
+@Getter  @Setter @NoArgsConstructor 
 public class Employee {
 
     @Id
@@ -22,8 +37,9 @@ public class Employee {
     @Column(nullable = false)
     private String email;
 
-    @Column(name = "employment_type", nullable = false)
-    private String employmentType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "employment_type", nullable = false, length = 20)
+    private EmploymentType employmentType;
 
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
@@ -46,99 +62,9 @@ public class Employee {
     @Column(name = "updated_at", insertable = false)
     private OffsetDateTime updatedAt;
 
-    public Long getId() {
-        return id;
+    @PreUpdate 
+    void onUpdate() {
+        this.updatedAt = OffsetDateTime.now();
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getBusinessId() {
-        return businessId;
-    }
-
-    public void setBusinessId(Long businessId) {
-        this.businessId = businessId;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEmploymentType() {
-        return employmentType;
-    }
-
-    public void setEmploymentType(String employmentType) {
-        this.employmentType = employmentType;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public BigDecimal getBaseHourlyRate() {
-        return baseHourlyRate;
-    }
-
-    public void setBaseHourlyRate(BigDecimal baseHourlyRate) {
-        this.baseHourlyRate = baseHourlyRate;
-    }
-
-    public Integer getMaxWeeklyHours() {
-        return maxWeeklyHours;
-    }
-
-    public void setMaxWeeklyHours(Integer maxWeeklyHours) {
-        this.maxWeeklyHours = maxWeeklyHours;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(OffsetDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public OffsetDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(OffsetDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+    
 }
